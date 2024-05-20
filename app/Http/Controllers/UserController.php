@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rules\Enum;
+use App\Models\Category;
 
 class UserController extends Controller
 {
@@ -29,5 +30,27 @@ class UserController extends Controller
         ]);
 
         return response()->json(['message' => 'Role assigned successfully']);
+    }
+
+    public function storeCategory(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string'
+        ]);
+
+        Category::create($request->validated());
+
+        return response()->json(['message' => 'Category created successfully']);
+    }
+
+    public function indexCategory()
+    {
+        return response()->json(Category::all());
+    }
+
+    public function destroyCategory(Category $category)
+    {
+        $category->delete();
+        return response()->json(['message' => 'Category deleted successfully']);
     }
 }

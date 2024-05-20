@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
     NewsController,
     CommentController,
-    Auth\UserController,
+    UserController,
 };
 
 /*
@@ -23,9 +23,20 @@ Route::post('/login', [App\Http\Controllers\Auth\UserController::class, 'login']
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
-    Route::get('/logout', [UserController::class, 'logout']);
+    Route::get('/logout', [App\Http\Controllers\UserController::class, 'logout']);
 
-    Route::post('assign_role_to_user', [App\Http\Controllers\UserController::class, 'assignCategory'])->middleware('admin');
+    Route::post('assign_role_to_user', [UserController::class, 'assignCategory'])->middleware('admin');
+
+
+    Route::post('category', [UserController::class, 'storeCategory'])->middleware('admin');
+
+
+    Route::group(['prefix' => 'category' ], function (){
+        Route::get('/', [UserController::class, 'indexCategory']);
+        Route::post('/', [UserController::class, 'storeCategory']);
+        Route::delete('/{news}', [UserController::class, 'destroyCategory']);
+    });
+
 
     Route::group(['prefix' => 'news' ], function (){
         Route::get('/', [NewsController::class, 'index']);
@@ -37,12 +48,12 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::group(['prefix' => 'comment'], function () {
         // send me news id to add comment to any news post
-        Route::post('/{news}', [App\Http\Controllers\CommentController::class, 'store']);
-        Route::get('/{news}', [App\Http\Controllers\CommentController::class, 'index']);
-        Route::delete('/{news}', [App\Http\Controllers\CommentController::class, 'index']);
+        Route::post('/{news}', [CommentController::class, 'store']);
+        Route::get('/{news}', [CommentController::class, 'index']);
+        Route::delete('/{news}', [CommentController::class, 'index']);
 
         // send me comment id and news id
-        Route::post('update/{id}/{comment}', [App\Http\Controllers\CommentController::class, 'update']);
+        Route::post('update/{id}/{comment}', [CommentController::class, 'update']);
     });
 
 });
