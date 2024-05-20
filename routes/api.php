@@ -27,13 +27,13 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::get('assign_role_to_user', [App\Http\Controllers\UserController::class, 'assignCategory'])->middleware('admin');
 
-    Route::group(['prefix' => 'news'], function (){
+    Route::group(['prefix' => 'news' ], function (){
         Route::get('/', [NewsController::class, 'index']);
         Route::post('/', [NewsController::class, 'store']);
         Route::get('/{news}', [NewsController::class, 'show']);
         Route::post('/{news}', [NewsController::class, 'update']);
         Route::delete('/{news}', [NewsController::class, 'destroy']);
-    })->middleware('category_admin');
+    });
 
     Route::group(['prefix' => 'comment'], function () {
         // send me news id to add comment to any news post

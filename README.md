@@ -58,7 +58,8 @@ delete to delete data <br>
       POST       api/news/{news}
       DELETE     api/news/{news}
 
-- add comment and {comment} is comment primary key
+- add comment and {comment} is comment primary key <br>
+  i have added policy to authorization rules
 
   POST       api/comment/{news}
   GET|HEAD   api/comment/{news}

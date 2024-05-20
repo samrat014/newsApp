@@ -9,6 +9,12 @@ use App\Models\News;
 
 class NewsController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('category_admin')->only(['store', 'update', 'destroy']);
+    }
+
     /**
      * Display a listing of the resource.
      */
