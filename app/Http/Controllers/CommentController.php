@@ -63,12 +63,10 @@ class CommentController extends Controller
     public function update(UpdateCommentRequest $request, Comment $comment)
     {
 
+        $this->authorize('update', $comment);
+
         if (!$news = News::find($request->news_id)) {
             return response()->json('news not found', 404);
-        }
-
-        if ($comment->user_id !== auth()->id()) {
-            return response()->json('unauthorized', 401);
         }
 
         if ($news->id !== $comment->news_id) {
@@ -86,6 +84,8 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
+        $this->authorize('delete', $comment);
+
         $comment->delete();
 
         return response()->json('comment deleted', 200);
