@@ -21,4 +21,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/logout', [App\Http\Controllers\Auth\UserController::class, 'logout']);
 
 
+    Route::group(['prefix' => 'news'], function (){
+        Route::get('/', [App\Http\Controllers\NewsController::class, 'index']);
+        Route::post('/', [App\Http\Controllers\NewsController::class, 'store']);
+        Route::get('/{id}', [App\Http\Controllers\NewsController::class, 'show']);
+        Route::post('/{id}', [App\Http\Controllers\NewsController::class, 'update']);
+        Route::delete('/{id}', [App\Http\Controllers\NewsController::class, 'destroy']);
+    });
 });
