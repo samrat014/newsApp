@@ -44,26 +44,25 @@ post to add or update <br>
 get to get data <br>
 delete to delete data <br>
 
-- login
-    http://127.0.0.1:8000/api/login
-    http://127.0.0.1:8000/api/logout
+- login and logout <br>
+    `http://127.0.0.1:8000/api/login`<br>
+    `http://127.0.0.1:8000/api/logout`
 
-- assign user role
-    POST        api/assign_role_to_user
 
-- add news and {news} is news primary key
-    http://127.0.0.1:8000/api/news
-      POST       api/news
-      GET|HEAD   api/news/{news}
-      POST       api/news/{news}
-      DELETE     api/news/{news}
+- assign user role <br>
+    `POST        api/assign_role_to_user` <br>
 
+- add news and {news} is news primary key <br>
+
+    `http://127.0.0.1:8000/api/news`<br>
+    `  POST       api/news` <br>
+      `GET|HEAD   api/news/{news}`<br>
+      `POST       api/news/{news}`<br>
+      `DELETE     api/news/{news}`<br>
+    `
 - add comment and {comment} is comment primary key <br>
-  i have added policy to authorization rules
-
-  POST       api/comment/{news}
-  GET|HEAD   api/comment/{news}
-  DELETE     api/comment/{news}
-  UPDATE   api/comment/update/{id}/{comment}
-
-
+  i have added policy to authorization rules <br>
+     ` POST       api/comment/{news}`<br>
+      `GET|HEAD   api/comment/{news}`<br>
+     ` DELETE     api/comment/{news}`<br>
+    `  UPDATE   api/comment/update/{id}/{comment}`<br>
