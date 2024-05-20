@@ -25,7 +25,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::get('/logout', [UserController::class, 'logout']);
 
-    Route::get('assign_role_to_user', [App\Http\Controllers\UserController::class, 'assignCategory'])->middleware('admin');
+    Route::post('assign_role_to_user', [App\Http\Controllers\UserController::class, 'assignCategory'])->middleware('admin');
 
     Route::group(['prefix' => 'news' ], function (){
         Route::get('/', [NewsController::class, 'index']);
