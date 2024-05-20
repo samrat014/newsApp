@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreNewsRequest;
 use App\Http\Requests\UpdateNewsRequest;
+use App\Http\Resources\NewsResource;
 use App\Models\News;
 
 class NewsController extends Controller
@@ -13,9 +14,11 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $news = News::all();
+        $news = News::with('comment', 'user:id,name')->get();
 
-        return response()->json($news, 200);
+        return response()->json(
+            NewsResource::collection($news)
+            , 200);
     }
 
     /**
@@ -46,7 +49,9 @@ class NewsController extends Controller
      */
     public function show(News $news)
     {
-        return response()->json($news, 200);
+        return response()->json(
+            NewsResource::collection($news->load('comment', 'user:id,name'))
+            , 200);
     }
 
     /**
@@ -82,6 +87,7 @@ class NewsController extends Controller
         if ($news->image){
             parent::deleteFile($news->image, 'news');
         }
+        $news->comment()->delete();
 
         $news->delete();
 
