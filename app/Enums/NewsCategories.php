@@ -4,7 +4,6 @@ namespace App\Enums;
 
 enum NewsCategories : string
 {
-
     case Politics = 'politics';
 
     case Sports = 'sports';
