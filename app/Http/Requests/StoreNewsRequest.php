@@ -26,7 +26,9 @@ class StoreNewsRequest extends FormRequest
         return [
 
             // using this way so we can use different enum for future
-            'category' => new Enum(NewsCategories::class),
+            'category' => ['required',
+                new Enum(NewsCategories::class)
+            ],
 
 
             'title' => 'required|string',

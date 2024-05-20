@@ -39,6 +39,7 @@ class NewsController extends Controller
         if ($request->hasFile('image')) {
             $news->image = parent::storeFile($request->file('image'), 'news');
         }
+        $news->user_id = auth()->id();
         $news->save();
 
         return response()->json($news, 201);

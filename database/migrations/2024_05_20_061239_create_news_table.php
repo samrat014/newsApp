@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
 
             // this is to keep who created this news post
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->nullable()->constrained();
 
             $table->string('category');
             // this can be used as
