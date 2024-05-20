@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\UpdateCommentRequest;
+use App\Http\Resources\CommentResource;
 use App\Models\Comment;
 use App\Models\News;
 
@@ -14,7 +15,8 @@ class CommentController extends Controller
      */
     public function index(News $news)
     {
-        return response()->json($news->comment, 200);
+        return response()->json(
+            CommentResource::collection($news->comment), 200);
     }
 
     /**
@@ -60,6 +62,19 @@ class CommentController extends Controller
      */
     public function update(UpdateCommentRequest $request, Comment $comment)
     {
+
+        if (!$news = News::find($request->news_id)) {
+            return response()->json('news not found', 404);
+        }
+
+        if ($comment->user_id !== auth()->id()) {
+            return response()->json('unauthorized', 401);
+        }
+
+        if ($news->id !== $comment->news_id) {
+            return response()->json('comment not found', 404);
+        }
+
         $comment->comment = $request->comment;
         $comment->save();
 
