@@ -2,6 +2,11 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\{
+    NewsController,
+    CommentController,
+    Auth\UserController,
+};
 
 /*
 |--------------------------------------------------------------------------
@@ -18,16 +23,17 @@ Route::post('/login', [App\Http\Controllers\Auth\UserController::class, 'login']
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
-    Route::get('/logout', [App\Http\Controllers\Auth\UserController::class, 'logout']);
+    Route::get('/logout', [UserController::class, 'logout']);
 
+    Route::get('assign_role_to_user', [App\Http\Controllers\UserController::class, 'assignCategory'])->middleware('admin');
 
     Route::group(['prefix' => 'news'], function (){
-        Route::get('/', [App\Http\Controllers\NewsController::class, 'index']);
-        Route::post('/', [App\Http\Controllers\NewsController::class, 'store']);
-        Route::get('/{news}', [App\Http\Controllers\NewsController::class, 'show']);
-        Route::post('/{news}', [App\Http\Controllers\NewsController::class, 'update']);
-        Route::delete('/{news}', [App\Http\Controllers\NewsController::class, 'destroy']);
-    });
+        Route::get('/', [NewsController::class, 'index']);
+        Route::post('/', [NewsController::class, 'store']);
+        Route::get('/{news}', [NewsController::class, 'show']);
+        Route::post('/{news}', [NewsController::class, 'update']);
+        Route::delete('/{news}', [NewsController::class, 'destroy']);
+    })->middleware('category_admin');
 
     Route::group(['prefix' => 'comment'], function () {
         // send me news id to add comment to any news post
